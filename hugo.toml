@@ -1,0 +1,4 @@
+baseURL = "https://dcns-lab-fju.github.io/lab-website/"
+languageCode = "en-us"
+title = "DCNS Lab"
+theme = "PaperMod"
