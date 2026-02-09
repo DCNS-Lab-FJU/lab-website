@@ -2,3 +2,31 @@ baseURL = "https://dcns-lab-fju.github.io/lab-website/"
 languageCode = "en-us"
 title = "DCNS Lab"
 theme = "PaperMod"
+
+[menu]
+  [[menu.main]]
+    name = "Members"
+    url = "/members/"
+    weight = 10
+
+  [[menu.main]]
+    name = "Publications"
+    url = "/publications/"
+    weight = 20
+
+[params]
+  profileMode = true
+  [params.profileMode]
+    enabled = true
+    title = "DCNS Lab"
+    subtitle = "Welcome to DCNS Lab."
+    imageUrl = ""
+    imageTitle = "DCNS Lab"
+
+    [[params.profileMode.buttons]]
+      name = "Members"
+      url = "members/"
+
+    [[params.profileMode.buttons]]
+      name = "Publications"
+      url = "publications/"
