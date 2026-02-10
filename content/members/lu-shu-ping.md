@@ -1,6 +1,14 @@
 ---
 title: "盧淑萍"
+role: "Principal Investigator"
 ---
+
+{{< img src="images/members/lu-shu-ping.jpg" alt="盧淑萍" w="220" >}}
+
+
+
+
+
 
 **Lu Shu Ping**  
 Assistant Professor
@@ -34,4 +42,6 @@ Assistant Professor
 ---
 
 ### 著作與發表
-請參閱 [Publications](/publications/)
+請參閱 [Publications]({{< relref "/publications/_index.md" >}})
+
+

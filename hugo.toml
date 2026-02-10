@@ -19,7 +19,11 @@ theme = "PaperMod"
     enabled = true
     title = "DCNS Lab"
     subtitle = "Welcome to DCNS Lab."
-
+    
+    imageUrl = "images/members/lu-shu-ping.jpg"
+    imageTitle = "Lu Shu Ping"
+    imageWidth = 220
+    imageHeight = 220
     [[params.profileMode.buttons]]
       name = "Members"
       url = "members/"
@@ -27,3 +31,6 @@ theme = "PaperMod"
     [[params.profileMode.buttons]]
       name = "Publications"
       url = "publications/"
+    [params.footer]
+      text = "Developed by Ting-Yu Chien (2026) · Maintained by Ting-Yu Chien"
+
