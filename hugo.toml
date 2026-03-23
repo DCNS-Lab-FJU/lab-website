@@ -19,6 +19,10 @@ enableGitInfo = true
     weight = 20
 
 [params]
+  [params.author]
+    name = "Ting-Yu Chien"
+    email = "159977@mail.fju.edu.tw"
+
   [params.profileMode]
     enabled = true
     title = "DCNS Lab"
