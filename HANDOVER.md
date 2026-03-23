@@ -1,47 +1,47 @@
-# DCNS Lab Website Handover (Minimum Deliverable)
+# DCNS Lab 網站交接文件（最小可交付版）
 
-## 1) Project Overview
+## 1) 專案總覽
 
-- Framework: Hugo + PaperMod
-- Deployment: GitHub Pages (project site)
-- URL: https://dcns-lab-fju.github.io/lab-website/
-- Repository: DCNS-Lab-FJU/lab-website
+- 框架：Hugo + PaperMod
+- 部署：GitHub Pages（project site）
+- 網址：https://dcns-lab-fju.github.io/lab-website/
+- Repository：DCNS-Lab-FJU/lab-website
 
-This site uses a project-site base path (`/lab-website/`).
-Do not hardcode `"/lab-website/"` in content links.
+本網站使用 project-site 子路徑（`/lab-website/`）。
+內容中的連結不要手動硬寫 `"/lab-website/"`。
 
 ---
 
-## 2) Local Development
+## 2) 本機開發
 
-### Prerequisites
+### 需求環境
 
-- Hugo Extended (recommended latest)
+- Hugo Extended（建議最新版）
 - Git
 
-### Run locally
+### 本機啟動
 
 ```bash
 hugo server -D
 ```
 
-Local preview URL is usually:
+本機預覽網址通常是：
 
 ```text
 http://localhost:1313/lab-website/
 ```
 
-### Production build check
+### 正式建構檢查
 
 ```bash
 hugo --minify
 ```
 
-Generated files are in `public/` and should not be committed.
+建構輸出在 `public/`，不應提交到 git。
 
 ---
 
-## 3) Content Structure
+## 3) 內容結構
 
 ```text
 content/
@@ -53,8 +53,11 @@ content/
       lu-shu-ping.md
     students/
       _index.md
-      student-demo.md
       student-template.md
+      m-xxx-xxx.md
+    alumni/
+      _index.md
+      m-xxx-xxx.md
   publications/
     _index.md
 
@@ -67,25 +70,25 @@ static/
 
 ---
 
-## 4) Add or Update a Member
+## 4) 新增或更新成員
 
-### Add faculty
+### 新增教師（Faculty）
 
-1. Create a new file under `content/members/faculty/`.
-2. Fill front matter and profile content.
-3. Add photo to `static/images/members/`.
-4. Use shortcode image syntax:
+1. 在 `content/members/faculty/` 新增檔案。
+2. 填寫 front matter 與頁面內容。
+3. 照片放在 `static/images/members/`。
+4. 用 shortcode 插入圖片：
 
 ```markdown
 {{< img src="images/members/example.jpg" alt="Example" w="220" >}}
 ```
 
-### Add student
+### 新增學生（Students）
 
-1. Copy `content/members/students/student-template.md` to a new file.
-2. Update fields and profile text.
-3. Put PDF outputs in `static/files/students/<student-id>/`.
-4. Link files with shortcode:
+1. 複製 `content/members/students/student-template.md` 成新檔。
+2. 填寫欄位與內容。
+3. PDF 檔放在 `static/files/students/<student-id>/`。
+4. 用 shortcode 連結檔案：
 
 ```markdown
 {{< filelink path="files/students/<student-id>/report.pdf" text="Project Report" >}}
@@ -93,11 +96,11 @@ static/
 
 ---
 
-## 5) Add Publications
+## 5) 新增 Publications
 
-Edit `content/publications/_index.md`.
+編輯 `content/publications/_index.md`。
 
-Use this normalized format per item:
+每筆建議使用固定格式：
 
 ```markdown
 - **Year:** 2026  
@@ -107,103 +110,103 @@ Use this normalized format per item:
   **Link:** https://...
 ```
 
-Keep sections:
+章節建議維持：
 
 - Journal Articles
 - Conference Papers
 - Patents
 - Technical Reports
 
-This keeps migration to YAML or BibTeX easy later.
+這樣未來要轉 YAML / BibTeX 會比較容易。
 
 ---
 
-## 6) Paths and Linking Rules (Project Site Safe)
+## 6) 路徑與連結規則（Project Site 安全）
 
-### Internal page links
+### 站內頁面連結
 
-Use `relref`:
+使用 `relref`：
 
 ```markdown
 [Members]({{< relref "/members/_index.md" >}})
 ```
 
-### Static files
+### 靜態檔案連結
 
-Use `filelink` shortcode (internally uses `relURL`):
+使用 `filelink` shortcode（內部用 `relURL`）：
 
 ```markdown
 {{< filelink path="files/students/demo/report.pdf" text="Project Report" >}}
 ```
 
-### Do not do
+### 不要這樣做
 
-- Do not hardcode `/lab-website/...`
-- Do not use root-only links like `/members/` in Markdown content
+- 不要手寫 `/lab-website/...`
+- 不要在 Markdown 直接用根路徑 `/members/` 這類寫法
 
 ---
 
 ## 7) Mandatory Credits
 
-Credits are configured in `hugo.toml` under `params.footer.text`.
+Credits 目前在 `hugo.toml` 的 `params.footer.text` 設定。
 
-Last updated is rendered in `layouts/partials/extend_footer.html` using page `Lastmod`.
+Last Updated 由 `layouts/partials/extend_footer.html` 使用頁面的 `Lastmod` 顯示。
 
-For better timestamp quality, `enableGitInfo = true` is enabled.
+已啟用 `enableGitInfo = true`，可提升最後更新時間的可靠度。
 
 ---
 
-## 8) Deployment
+## 8) 部署流程
 
-GitHub Actions workflow file:
+GitHub Actions workflow：
 
 - `.github/workflows/pages.yml`
 
-Flow:
+流程：
 
-1. Push to `main`
-2. Action builds Hugo site
-3. Deploy to GitHub Pages
+1. Push 到 `main`
+2. Action 建構 Hugo 網站
+3. 部署到 GitHub Pages
 
-If deployment fails, check:
+若部署失敗，優先檢查：
 
-- Hugo version
+- Hugo 版本
 - baseURL
-- broken relative links
-- missing submodule checkout
+- 相對路徑是否失效
+- submodule 是否正確 checkout
 
 ---
 
-## 9) Common Pitfalls
+## 9) 常見問題
 
-1. **404 after deploy**
-   Usually caused by hardcoded root paths.
-2. **Image missing**
-   Ensure files are in `static/images/...` and linked by shortcode.
-3. **PDF link broken**
-   Ensure files are in `static/files/...` and linked with `filelink`.
-4. **Members page shows unwanted cards**
-   Keep `content/members/_index.md` using `layout: "members"`.
-
----
-
-## 10) PR Maintenance SOP (Recommended)
-
-For each member update PR:
-
-1. One topic per PR (member profile or publication update)
-2. Include changed Markdown and assets only
-3. Reviewer checklist:
-   - links open correctly
-   - image/PDF path valid
-   - no hardcoded `/lab-website/`
-   - `hugo --minify` passes locally or in CI
+1. **部署後 404**
+   多半是路徑被手寫成 root 路徑。
+2. **圖片不顯示**
+   確認圖片放在 `static/images/...` 並使用 shortcode。
+3. **PDF 連結失效**
+   確認檔案在 `static/files/...` 並使用 `filelink`。
+4. **Members 首頁顯示不想要的卡片**
+   `content/members/_index.md` 應使用 `layout: "members-home"`。
 
 ---
 
-## 11) Future Upgrade Plan (Not Immediate)
+## 10) PR 維護 SOP（建議）
 
-1. Move publications to data-driven format (YAML/BibTeX)
-2. Enable search for members/publications index
-3. Add CSV/Excel export script (Python-based)
-4. Move large PDFs/slides to GitHub Releases and keep website as index page
+每次成員更新 PR 建議：
+
+1. 一個 PR 只處理一件主題（成員或 publication）
+2. 只包含必要 Markdown 與資產檔案
+3. Reviewer 檢查清單：
+   - 連結可開啟
+   - 圖片 / PDF 路徑正確
+   - 沒有硬寫 `/lab-website/`
+   - `hugo --minify` 在本機或 CI 通過
+
+---
+
+## 11) 後續升級規劃（非立即）
+
+1. Publications 轉為資料驅動（YAML / BibTeX）
+2. 補 members / publications 搜尋
+3. 新增 CSV/Excel 匯出腳本（Python）
+4. 大型 PDF / 投影片改放 GitHub Releases，網站保留索引與連結

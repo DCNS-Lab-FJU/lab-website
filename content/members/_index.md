@@ -1,14 +1,15 @@
 ---
 title: "Members"
-layout: "members"
+layout: "members-home"
 
 ---
 
 ## Faculty
-- [Lu Shu Ping](faculty/lu-shu-ping/)
+- [View Faculty](faculty/)
 
 ## Students
-- [Student Demo](students/student-demo/)
+- [View Students](students/)
 
 ## Alumni
-- Coming soon
+- [View Alumni](alumni/)
+
