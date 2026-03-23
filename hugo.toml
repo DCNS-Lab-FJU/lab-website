@@ -2,16 +2,20 @@ baseURL = "https://dcns-lab-fju.github.io/lab-website/"
 languageCode = "en-us"
 title = "DCNS Lab"
 theme = "PaperMod"
+enableGitInfo = true
+
+[frontmatter]
+  lastmod = [":git", "lastmod", "date", "publishDate"]
 
 [menu]
   [[menu.main]]
     name = "Members"
-    url = "/members/"
+    url = "members/"
     weight = 10
 
   [[menu.main]]
     name = "Publications"
-    url = "/publications/"
+    url = "publications/"
     weight = 20
 
 [params]

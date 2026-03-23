@@ -1,0 +1,5 @@
+---
+title: "Faculty"
+---
+
+Faculty profiles.

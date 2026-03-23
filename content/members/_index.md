@@ -1,10 +1,14 @@
 ---
 title: "Members"
+layout: "members"
 
 ---
 
 ## Faculty
-- [盧淑萍 教授](lu-shu-ping/)
+- [Lu Shu Ping](faculty/lu-shu-ping/)
 
 ## Students
-- [Demo Student](student-demo/)
+- [Student Demo](students/student-demo/)
+
+## Alumni
+- Coming soon

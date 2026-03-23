@@ -4,5 +4,5 @@ title: "DCNS Lab"
 
 Welcome to DCNS Lab.
 
-- [members](/members)
-- [publications](/publications) 
+- [Members]({{< relref "/members/_index.md" >}})
+- [Publications]({{< relref "/publications/_index.md" >}})

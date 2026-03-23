@@ -1,5 +1,5 @@
 ---
-title: "盧淑萍"
+title: "Lu Shu Ping"
 role: "Principal Investigator"
 ---
 
@@ -41,7 +41,7 @@ Assistant Professor
 
 ---
 
-### 著作與發表
-請參閱 [Publications]({{< relref "/publications/_index.md" >}})
+### Publications
+See [Publications]({{< relref "/publications/_index.md" >}}).
 
 
