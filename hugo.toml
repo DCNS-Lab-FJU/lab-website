@@ -9,15 +9,15 @@ defaultContentLanguage = "en"
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
-# 雙語化設定（目前主語言為英文；中文內容逐步補充）
-[languages]
-  [languages.en]
-    languageName = "EN"
-    weight = 1
-  [languages.zh-tw]
-    languageName = "中文"
-    weight = 2
-    title = "DCNS 實驗室"
+# 雙語化設定（中文內容就緒後再取消註解）
+# [languages]
+#   [languages.en]
+#     languageName = "EN"
+#     weight = 1
+#   [languages.zh-tw]
+#     languageName = "中文"
+#     weight = 2
+#     title = "DCNS 實驗室"
 
 [frontmatter]
   lastmod = [":git", "lastmod", "date", "publishDate"]
