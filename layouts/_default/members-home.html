@@ -79,11 +79,16 @@
   {{- range $facultySection.RegularPages }}
   <div class="faculty-card">
     <a href="{{ .RelPermalink }}">
+      {{- $avatar := .Params.avatar }}
+      {{- if $avatar }}
+      <img class="faculty-avatar" src="{{ $avatar | relURL }}" alt="{{ .Title }}">
+      {{- else }}
       {{- $img := printf "images/members/%s.jpg" (.File.BaseFileName) }}
       {{- if fileExists (printf "static/%s" $img) }}
       <img class="faculty-avatar" src="{{ $img | relURL }}" alt="{{ .Title }}">
       {{- else }}
       <div class="member-initials">{{ substr .Title 0 1 }}</div>
+      {{- end }}
       {{- end }}
       <p class="member-name">{{ .Title }}</p>
       {{- with .Params.role }}<p class="member-role">{{ . }}</p>{{- end }}
@@ -102,7 +107,11 @@
   {{- range $students }}
   <div class="member-card">
     <a href="{{ .RelPermalink }}">
+      {{- if .Params.avatar }}
+      <img class="member-avatar" src="{{ .Params.avatar | relURL }}" alt="{{ .Title }}">
+      {{- else }}
       <div class="member-initials">{{ substr .Title 0 1 }}</div>
+      {{- end }}
       <p class="member-name">{{ .Title }}</p>
       {{- with .Params.role }}<p class="member-role">{{ . }}</p>{{- end }}
       {{- with .Params.year }}<p class="member-year">Year {{ . }}</p>{{- end }}
@@ -122,7 +131,11 @@
   {{- range $alumni }}
   <div class="member-card">
     <a href="{{ .RelPermalink }}">
+      {{- if .Params.avatar }}
+      <img class="member-avatar" src="{{ .Params.avatar | relURL }}" alt="{{ .Title }}">
+      {{- else }}
       <div class="member-initials">{{ substr .Title 0 1 }}</div>
+      {{- end }}
       <p class="member-name">{{ .Title }}</p>
       {{- with .Params.role }}<p class="member-role">{{ . }}</p>{{- end }}
       {{- with .Params.year }}<p class="member-year">{{ . }}</p>{{- end }}

@@ -1,8 +1,9 @@
----
+﻿---
 title: "王丞祐"
 role: "Alumni Project Student"
 year: "114"
 category: "歷屆專題生"
+avatar: ""             # 照片路徑，例如 images/members/your-photo.jpg
 draft: false
 ---
 

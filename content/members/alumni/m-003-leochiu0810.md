@@ -1,8 +1,9 @@
----
+﻿---
 title: "邱澤安"
 role: "Alumni Project Student"
 year: "113"
 category: "歷屆專題生"
+avatar: ""             # 照片路徑，例如 images/members/your-photo.jpg
 draft: false
 ---
 
