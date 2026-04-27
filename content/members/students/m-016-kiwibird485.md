@@ -9,7 +9,8 @@ draft: false
 
 ## Research Topic / Project
 智慧中醫: AI視覺
-[專題報告 PDF](https://github.com/DCNS-Lab-FJU/lab-website/releases/download/files-chien-tinyu-2026/report.pdf)
+
+[專題報告 PDF](https://github.com/DCNS-Lab-FJU/lab-website/releases/download/files-chien-tinyu-2026/02.pdf)
 ## Additional Information
 - Start Year: 115
 - LinkedIn URL: N/A
