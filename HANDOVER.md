@@ -223,11 +223,90 @@ GitHub Actions workflow：
 
 ---
 
-## 12) 後續升級規劃（非立即）
 
 ## 12) 後續升級規劃（非立即）
 
-1. Publications 轉 BibTeX 格式（現已有 YAML 資料基礎）
-2. 補 members / publications 搜尋與 filter
-3. 新增 CSV/Excel 匯出腳本（Python）
-4. 雙語化（中英文並陳）
+1. ~~Publications 轉 BibTeX 格式~~ ✅（`scripts/generate_bib.py`）
+2. ~~補 members / publications 搜尋與 filter~~ ✅（Search 頁、Year Filter）
+3. ~~新增 CSV/Excel 匯出腳本~~ ✅（`scripts/export_publications.py`）
+4. 雙語化（中英文並陳）— 骨架已建，待填入中文內容
+
+---
+
+> 成員自主更新、新增成員的操作步驟，請見 **[ADD_MEMBER.md](ADD_MEMBER.md)**。
+
+---
+
+## 13) 設計邏輯與坑點紀錄（給下一屆）
+
+> *Created by Ting-Yu Chien (Apr. 27, 2026)*
+
+### 核心設計邏輯
+
+| 決策 | 原因 |
+|---|---|
+| Hugo + PaperMod | 零成本、純靜態、GitHub Pages 原生支援，不需後端 |
+| Project Site 子路徑 `/lab-website/` | GitHub 免費方案限制，所有連結需用 `relURL`，不能硬寫絕對路徑 |
+| `data/publications.yaml` 資料驅動 | 新增論文不改模板，降低維護門檻 |
+| `layouts/` 覆寫 theme | 永遠不修改 `themes/PaperMod/`，升級 theme 不會破版 |
+| `avatar` front matter | 各成員自行填路徑，layout 自動讀取，不需改模板 |
+
+### 最容易踩的坑
+
+1. **`params.author` 設成 map → `map[email: name:]` 印在頁面上**
+   - 根因：PaperMod `author.html` 遇到 map 型別直接印出物件
+   - 解法：覆寫 `layouts/partials/author.html`，用 `reflect.IsMap` 判斷後只取 `.name`；全站加 `hideAuthor = true`
+
+2. **GitHub Actions 崩潰：`can't evaluate field Author in type interface {}`**
+   - 根因：`params.author` 不存在時，PaperMod rss.xml fallback 到 `site.Author`，Hugo v0.160 型別更嚴格
+   - 解法：覆寫 `layouts/_default/rss.xml`，移除 `site.Author` fallback
+
+3. **Project Site 圖片/連結 404**
+   - 根因：Hugo 在子路徑時，`/images/...` 會解析成根域名路徑
+   - 解法：所有圖片用 `{{< img >}}` shortcode，所有檔案連結用 `{{< filelink >}}`，內部都走 `relURL`
+
+4. **`hugo.toml` TOML 解析問題**
+   - 根因：TOML 的 table（`[section]`）之後的頂層 key 會被誤認為 table 的子鍵
+   - 解法：頂層設定（如 `defaultContentLanguage`）必須放在所有 `[table]` 之前
+
+5. **Members layout 全站生效**
+   - 根因：把 layout 放在 `layouts/members/list.html` 會影響所有 members 子頁
+   - 解法：只對 `_index.md` 指定 `layout: "members-home"`，子頁走 PaperMod 預設 list
+
+6. **新增語言後語言切換按鈕出現 → 點了 404**
+   - 根因：定義了語言但沒有對應內容頁
+   - 解法：先準備好 `content/zh-tw/` 的頁面再取消 `hugo.toml` 中語言設定的註解
+
+---
+
+## 14) 給下一屆的建議
+
+### 優先擴充項目
+
+1. **中文內容**（老師指定方向）
+   在 `content/` 下建立 `.zh-tw.md` 對應檔，`hugo.toml` 取消 `[languages]` 區塊的註解即可啟用雙語切換
+
+2. **Search 強化**
+   PaperMod 內建 Fuse.js 搜尋已啟用，可在 `hugo.toml` 加 `[params.fuseOpts]` 調整搜尋精度
+
+3. **Publications BibTeX 自動化**
+   每次更新論文後執行 `python scripts/generate_bib.py`，可考慮加入 GitHub Actions 自動執行
+
+4. **成員自動化統計頁**
+   Hugo 可用 `range where` 統計各類別成員數，做一個簡單的 Lab Stats 頁面
+
+### 不建議做的事
+
+- 不要把 `themes/PaperMod/` 裡的檔案直接改，升級會全壞
+- 不要用 Git LFS，增加複雜度沒有對應好處
+- 不要把大型 PDF commit 進 repo，用 GitHub Releases
+- 不要在 `content/` 裡的 Markdown 硬寫 `/lab-website/` 路徑
+
+### 10 分鐘交接清單
+
+接手前確認能完成以下操作：
+- [ ] `git clone` → `hugo server -D` → 看到本機預覽
+- [ ] 新增一篇論文到 `data/publications.yaml` → `hugo --minify` 成功
+- [ ] 複製 `student-template.md` → 填寫欄位 → commit → push → PR
+- [ ] 知道部署失敗時去哪裡看 log（GitHub → Actions → 最新一次 workflow）
+- [ ] 知道哪個檔案控制頁尾版權文字（`hugo.toml` → `params.footer.text`）
