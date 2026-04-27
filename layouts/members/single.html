@@ -1,0 +1,65 @@
+{{- define "main" }}
+
+<article class="post-single">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title entry-hint-parent">{{ .Title }}</h1>
+    {{- if .Description }}
+    <div class="post-description">{{ .Description }}</div>
+    {{- end }}
+    {{- if not (.Param "hideMeta") }}
+    <div class="post-meta">
+      {{- partial "post_meta.html" . -}}
+    </div>
+    {{- end }}
+  </header>
+
+  {{/* ── Resources 連結（若 front matter 有填 resources 欄位） ── */}}
+  {{- with .Params.resources }}
+  <div class="member-resources-block">
+    <a href="{{ . }}" target="_blank" rel="noopener" class="member-resources-btn">
+      &#128196;&nbsp;Resources（論文、投影片、程式碼）
+    </a>
+  </div>
+  <style>
+  .member-resources-block { margin: 1rem 0 1.8rem; }
+  .member-resources-btn {
+    display: inline-block;
+    padding: .45rem 1.2rem;
+    border: 1.5px solid var(--primary, #888);
+    border-radius: 99px;
+    font-size: .9rem;
+    color: var(--primary, #888);
+    text-decoration: none;
+    transition: background .15s, color .15s;
+  }
+  .member-resources-btn:hover { background: var(--primary, #888); color: #fff; }
+  </style>
+  {{- end }}
+
+  {{- if .Content }}
+  <div class="post-content">
+    {{- if not (.Param "disableAnchoredHeadings") }}
+    {{- partial "anchored_headings.html" .Content -}}
+    {{- else }}{{ .Content }}{{ end }}
+  </div>
+  {{- end }}
+
+  <footer class="post-footer">
+    {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+    <ul class="post-tags">
+      {{- range ($.GetTerms $tags) }}
+      <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
+      {{- end }}
+    </ul>
+    {{- if (.Param "ShowPostNavLinks") }}
+    {{- partial "post_nav_links.html" . }}
+    {{- end }}
+  </footer>
+
+  {{- if (.Param "comments") }}
+  {{- partial "comments.html" . }}
+  {{- end }}
+</article>
+
+{{- end }}

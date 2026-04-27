@@ -3,13 +3,14 @@ title: "簡廷宇"
 role: "Current Project Student"
 year: "115"
 category: "現任專題生"
-avatar: ""             # 照片路徑，例如 images/members/your-photo.jpgresources: "https://github.com/DCNS-Lab-FJU/lab-website/releases/tag/files-chien-tinyu-2026"draft: false
+avatar: ""             # 照片路徑，例如 images/members/your-photo.jpg
+resources: "https://github.com/DCNS-Lab-FJU/lab-website/releases/tag/files-chien-tinyu-2026"
+draft: false
 ---
 
 ## Research Topic / Project
 智慧中醫: AI視覺
 
-[專題報告 PDF](https://github.com/DCNS-Lab-FJU/lab-website/releases/download/files-chien-tinyu-2026/02.pdf)
 ## Additional Information
 - Start Year: 115
 - LinkedIn URL: N/A
