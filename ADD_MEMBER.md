@@ -1,7 +1,17 @@
 # 新增 / 更新成員 SOP
 
-> 本指南適用於想**更新個人頁面**或**新增成員**的人，不需要懂 Hugo 或程式。  
-> 技術開發細節請見 [HANDOVER.md](HANDOVER.md)。
+> 此文件的內容已整合至 **[README.md](README.md)**，請直接查閱 README.md。
+
+---
+
+快速跳轉：
+
+- [更新個人頁面](README.md#更新個人頁面)
+- [新增全新成員](README.md#新增全新成員)
+- [加上照片](README.md#加上照片)
+- [上傳檔案 / Resources 連結](README.md#上傳檔案並在個人頁面顯示-resources-連結)
+- [審核清單](README.md#審核清單管理員)
+
 
 ---
 

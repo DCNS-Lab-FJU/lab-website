@@ -46,6 +46,18 @@
 .member-name  { font-weight: 600; font-size: 1rem; margin: 0 0 .2rem; }
 .member-role  { font-size: .82rem; opacity: .7; margin: 0 0 .15rem; }
 .member-year  { font-size: .78rem; opacity: .55; margin: 0; }
+.member-resources {
+  display: inline-block;
+  margin-top: .55rem;
+  font-size: .75rem;
+  padding: .2rem .65rem;
+  border: 1px solid var(--primary, #888);
+  border-radius: 99px;
+  color: var(--primary, #888);
+  text-decoration: none;
+  transition: background .15s, color .15s;
+}
+.member-resources:hover { background: var(--primary, #888); color: #fff; }
 
 /* Faculty — 稍大卡片 */
 .faculty-grid {
@@ -116,6 +128,9 @@
       {{- with .Params.role }}<p class="member-role">{{ . }}</p>{{- end }}
       {{- with .Params.year }}<p class="member-year">Year {{ . }}</p>{{- end }}
     </a>
+    {{- with .Params.resources }}
+    <a class="member-resources" href="{{ . }}" target="_blank" rel="noopener">&#128196; Resources</a>
+    {{- end }}
   </div>
   {{- end }}
 </div>
@@ -140,6 +155,9 @@
       {{- with .Params.role }}<p class="member-role">{{ . }}</p>{{- end }}
       {{- with .Params.year }}<p class="member-year">{{ . }}</p>{{- end }}
     </a>
+    {{- with .Params.resources }}
+    <a class="member-resources" href="{{ . }}" target="_blank" rel="noopener">&#128196; Resources</a>
+    {{- end }}
   </div>
   {{- end }}
 </div>

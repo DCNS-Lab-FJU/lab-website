@@ -4,6 +4,7 @@ role: "M.S. Student"   # M.S. Student / Ph.D. Student / Research Assistant
 year: "115"            # 學年度 (e.g., 115)
 category: "研究生"      # 研究生 / 大專生
 avatar: ""             # 照片路徑，例如 images/members/your-photo.jpg（留空則顯示首字母）
+resources: ""          # GitHub Release 頁面網址，填入後卡片顯示 Resources 按鈕
 draft: true
 ---
 

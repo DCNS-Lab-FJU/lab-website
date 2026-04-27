@@ -3,8 +3,7 @@ title: "簡廷宇"
 role: "Current Project Student"
 year: "115"
 category: "現任專題生"
-avatar: ""             # 照片路徑，例如 images/members/your-photo.jpg
-draft: false
+avatar: ""             # 照片路徑，例如 images/members/your-photo.jpgresources: "https://github.com/DCNS-Lab-FJU/lab-website/releases/tag/files-chien-tinyu-2026"draft: false
 ---
 
 ## Research Topic / Project
