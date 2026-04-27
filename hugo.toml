@@ -19,7 +19,6 @@ enableGitInfo = true
     weight = 20
   
 [params]
-  author = "Ting-Yu Chien"
 
   [params.profileMode]
     enabled = true
