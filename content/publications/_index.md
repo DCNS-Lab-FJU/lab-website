@@ -47,16 +47,6 @@ This page keeps publications in a simple Markdown format first, then can be migr
 	**Venue:** ACM AIBC 2025  
 	**Link:** https://dl.acm.org/doi/10.1145/3775043.3775049
 
-- **Year:** 2025  
-	**Authors:** Shu-Ping Lu  
-	**Title:** Zero Trust Blockchain Framework for Post-Quantum Group Key Management in Multimedia Communications  
-	**Venue:** CVGIP 2025
-
-- **Year:** 2025  
-	**Authors:** Shu-Ping Lu, Chih-Chiao Wang, Wei-Ting Wu, Ze-An Ciou, Yi-Syuan Jhang  
-	**Title:** Blockchain-Based Dynamic Group-Key Management System for Decentralized Applications  
-	**Venue:** TCSE 2025
-
 - **Year:** 2024  
 	**Authors:** Shu-Ping Lu, Hung-Ming Chen, Cheng-Yun Ho  
 	**Title:** A Decentralized Gas-Free E-Ticket Tourism System with Dynamic Security: A Blockchain-Based Approach  

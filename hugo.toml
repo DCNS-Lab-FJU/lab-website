@@ -18,10 +18,8 @@ enableGitInfo = true
     url = "publications/"
     weight = 20
   
-  [params]
-    [params.author]
-      name = "Ting-Yu Chien"
-      email = "159977@mail.fju.edu.tw"
+[params]
+  author = "Ting-Yu Chien"
 
   [params.profileMode]
     enabled = true
@@ -40,5 +38,5 @@ enableGitInfo = true
       name = "Publications"
       url = "publications/"
     [params.footer]
-      text = "Developed by Ting-Yu Chien (2026) · Maintained by Ting-Yu Chien"
+      text = "Created by Ting-Yu Chien (2026) · Maintained by Ting-Yu Chien"
 
