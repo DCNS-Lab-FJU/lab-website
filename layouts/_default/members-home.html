@@ -1,16 +1,137 @@
 {{- define "main" }}
+{{- $facultySection  := site.GetPage "members/faculty" }}
+{{- $studentSection  := site.GetPage "members/students" }}
+{{- $alumniSection   := site.GetPage "members/alumni" }}
 
 <header class="page-header">
-  {{- partial "breadcrumbs.html" . }}
   <h1>{{ .Title }}</h1>
 </header>
 
-{{- if .Content }}
 <div class="post-content">
-  {{- if not (.Param "disableAnchoredHeadings") }}
-  {{- partial "anchored_headings.html" .Content -}}
-  {{- else }}{{ .Content }}{{ end }}
+
+<style>
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin: 1rem 0 2.5rem;
+}
+.member-card {
+  border: 1px solid var(--border, #444);
+  border-radius: 8px;
+  padding: 1.2rem 1rem;
+  text-align: center;
+  transition: box-shadow .2s;
+}
+.member-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,.25); }
+.member-card a { text-decoration: none; color: inherit; }
+.member-avatar {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto .7rem;
+  display: block;
+  background: var(--border, #555);
+}
+.member-initials {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--primary, #555);
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: bold;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto .7rem;
+}
+.member-name  { font-weight: 600; font-size: 1rem; margin: 0 0 .2rem; }
+.member-role  { font-size: .82rem; opacity: .7; margin: 0 0 .15rem; }
+.member-year  { font-size: .78rem; opacity: .55; margin: 0; }
+
+/* Faculty — 稍大卡片 */
+.faculty-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.2rem;
+  margin: 1rem 0 2.5rem;
+}
+.faculty-card {
+  border: 1px solid var(--border, #444);
+  border-radius: 8px;
+  padding: 1.5rem 1.2rem;
+  text-align: center;
+  transition: box-shadow .2s;
+}
+.faculty-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,.25); }
+.faculty-card a { text-decoration: none; color: inherit; }
+.faculty-avatar {
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto .8rem;
+  display: block;
+}
+</style>
+
+{{/* ── Faculty ── */}}
+{{- if $facultySection }}
+<h2>Faculty</h2>
+<div class="faculty-grid">
+  {{- range $facultySection.RegularPages }}
+  <div class="faculty-card">
+    <a href="{{ .RelPermalink }}">
+      {{- $img := printf "images/members/%s.jpg" (.File.BaseFileName) }}
+      {{- if fileExists (printf "static/%s" $img) }}
+      <img class="faculty-avatar" src="{{ $img | relURL }}" alt="{{ .Title }}">
+      {{- else }}
+      <div class="member-initials">{{ substr .Title 0 1 }}</div>
+      {{- end }}
+      <p class="member-name">{{ .Title }}</p>
+      {{- with .Params.role }}<p class="member-role">{{ . }}</p>{{- end }}
+    </a>
+  </div>
+  {{- end }}
 </div>
 {{- end }}
 
+{{/* ── Current Students ── */}}
+{{- if $studentSection }}
+{{- $students := where $studentSection.RegularPages "Params.draft" "ne" true }}
+{{- if $students }}
+<h2>Students</h2>
+<div class="members-grid">
+  {{- range $students }}
+  <div class="member-card">
+    <a href="{{ .RelPermalink }}">
+      <div class="member-initials">{{ substr .Title 0 1 }}</div>
+      <p class="member-name">{{ .Title }}</p>
+      {{- with .Params.role }}<p class="member-role">{{ . }}</p>{{- end }}
+      {{- with .Params.year }}<p class="member-year">Year {{ . }}</p>{{- end }}
+    </a>
+  </div>
+  {{- end }}
+</div>
+{{- end }}
+{{- end }}
+
+{{/* ── Alumni ── */}}
+{{- if $alumniSection }}
+{{- $alumni := $alumniSection.RegularPages }}
+{{- if $alumni }}
+<h2>Alumni</h2>
+<div class="members-grid">
+  {{- range $alumni }}
+  <div class="member-card">
+    <a href="{{ .RelPermalink }}">
+      <div class="member-initials">{{ substr .Title 0 1 }}</div>
+      <p class="member-name">{{ .Title }}</p>
+      {{- with .Params.role }}<p class="member-role">{{ . }}</p>{{- end }}
+      {{- with .Params.year }}<p class="member-year">{{ . }}</p>{{- end }}
+    </a>
+  </div>
+  {{- end }}
+</div>
+{{- end }}
+{{- end }}
+
+</div>
 {{- end }}
