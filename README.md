@@ -14,6 +14,7 @@
 - [新增全新成員](#新增全新成員)
 - [加上照片](#加上照片)
 - [上傳檔案並在個人頁面顯示 Resources 連結](#上傳檔案並在個人頁面顯示-resources-連結)
+- [新增論文到 Publications](#新增論文到-publications)
 - [審核清單（管理員）](#審核清單管理員)
 
 ---
@@ -146,6 +147,60 @@ draft: false
 | 個人所有資料 | `files-yourname-2026` |
 | 某篇論文補充資料 | `paper-icassp2026-supp` |
 | 某年度共用資源 | `resources-2026` |
+
+---
+
+## 新增論文到 Publications
+
+論文資料統一存放在 `data/publications.yaml`，網站頁面自動讀取，**不需要修改任何 HTML 模板**。
+
+### 步驟一：編輯 `data/publications.yaml`
+
+在對應區塊加入一筆新論文：
+
+```yaml
+# 期刊論文
+journal_articles:
+  - year: 2026
+    authors: "Student Name, Shu-Ping Lu"
+    title: "Paper Title"
+    venue: "Journal Name (Publisher)"
+    link: "https://doi.org/..."   # 無連結可省略此行
+
+# 研討會論文
+conference_papers:
+  - year: 2026
+    authors: "Student Name, Shu-Ping Lu"
+    title: "Paper Title"
+    venue: "ACM/IEEE Conference 2026"
+    link: "https://dl.acm.org/..."  # 無連結可省略此行
+```
+
+> ⚠️ `authors` 欄位第一個名字就是第一作者，學生發表的論文把學生名字放第一。
+
+### 步驟二：重新產生 BibTeX 檔
+
+```bash
+python scripts/generate_bib.py
+```
+
+這會更新 `static/publications.bib`（網站的 Download .bib 按鈕會下載這個檔案）。
+
+### 步驟三：commit + push
+
+```bash
+git add data/publications.yaml static/publications.bib
+git commit -m "feat(publications): add 論文標題"
+git push
+```
+
+### 常見情況
+
+| 情況 | 做法 |
+|---|---|
+| 論文還在審查中 | 先加入 YAML，`link` 欄位留空，接受後補上連結 |
+| 學生是第一作者 | `authors` 第一個填學生名字 |
+| 需要上傳論文全文 PDF | 用 GitHub Releases 上傳，把連結加到 `link` 欄位 |
 
 ---
 
