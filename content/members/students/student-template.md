@@ -1,23 +1,13 @@
 ---
 title: "Student Name"
-role: "M.S. Student"
-year: "115"
-start_year: "115"
-linkedin_url: ""
-github_or_website_url: ""
-note: ""
-research_interests:
-  - "Keyword 1"
-  - "Keyword 2"
+role: "M.S. Student"   # M.S. Student / Ph.D. Student / Research Assistant
+year: "115"            # 學年度 (e.g., 115)
+category: "研究生"      # 研究生 / 大專生
 draft: true
 ---
 
-## Bio
-Write a short self introduction (2-4 sentences).
-
-## Research Interests
-- Keyword 1
-- Keyword 2
+## Research Topic / Project
+Describe the student's research topic in one or two sentences.
 
 ## Additional Information
 - Start Year: 115
@@ -29,4 +19,4 @@ Write a short self introduction (2-4 sentences).
 - {{< filelink path="files/students/example/report.pdf" text="Project Report" >}}
 
 ## Contact
-- Email: your.email@example.com
+- Email: your.email@cloud.fju.edu.tw

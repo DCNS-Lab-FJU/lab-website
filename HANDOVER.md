@@ -98,26 +98,24 @@ static/
 
 ## 5) 新增 Publications
 
-編輯 `content/publications/_index.md`。
+論文資料統一存放在 `data/publications.yaml`，網站頁面自動讀取輸出。
 
-每筆建議使用固定格式：
+**新增一篇論文的步驟：**
 
-```markdown
-- **Year:** 2026  
-  **Authors:** A, B, C  
-  **Title:** Paper title  
-  **Venue:** Conference/Journal  
-  **Link:** https://...
+1. 開啟 `data/publications.yaml`
+2. 在對應章節（`journal_articles` 或 `conference_papers`）新增一筆：
+
+```yaml
+- year: 2026
+  authors: "Author A, Author B"
+  title: "Paper Title"
+  venue: "Conference or Journal Name"
+  link: "https://doi.org/..."   # 無連結可省略此行
 ```
 
-章節建議維持：
+3. `hugo --minify` 確認建構成功後 push。
 
-- Journal Articles
-- Conference Papers
-- Patents
-- Technical Reports
-
-這樣未來要轉 YAML / BibTeX 會比較容易。
+**不需要** 修改任何 HTML 模板或 `content/publications/_index.md`。
 
 ---
 
@@ -204,9 +202,32 @@ GitHub Actions workflow：
 
 ---
 
-## 11) 後續升級規劃（非立即）
+## 11) 大型檔案分流 SOP（GitHub Releases）
 
-1. Publications 轉為資料驅動（YAML / BibTeX）
-2. 補 members / publications 搜尋
+**原則**：PDF 投影片、影片、大型資料集不放在 git repo，改放 GitHub Releases，網站只保留連結。
+
+**步驟：**
+
+1. 到 GitHub Repository 頁面 → **Releases** → **Draft a new release**
+2. 建立新 tag（例如 `files-2026`），上傳大型檔案
+3. 複製下載連結（格式：`https://github.com/DCNS-Lab-FJU/lab-website/releases/download/<tag>/<filename>`）
+4. 在成員頁面或 publications 中使用一般 Markdown 連結：
+
+```markdown
+[Thesis PDF](https://github.com/DCNS-Lab-FJU/lab-website/releases/download/files-2026/thesis.pdf)
+```
+
+**不要這樣做：**
+- 不要把 PDF/影片直接 commit 進 `static/files/` 超過 10 MB
+- 不要使用 Git LFS（會增加複雜度）
+
+---
+
+## 12) 後續升級規劃（非立即）
+
+## 12) 後續升級規劃（非立即）
+
+1. Publications 轉 BibTeX 格式（現已有 YAML 資料基礎）
+2. 補 members / publications 搜尋與 filter
 3. 新增 CSV/Excel 匯出腳本（Python）
-4. 大型 PDF / 投影片改放 GitHub Releases，網站保留索引與連結
+4. 雙語化（中英文並陳）

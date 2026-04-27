@@ -1,0 +1,71 @@
+{{- define "main" }}
+{{- $pub := site.Data.publications }}
+
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+</header>
+
+<div class="post-content">
+
+{{- with $pub.journal_articles }}
+<h2>Journal Articles</h2>
+<ul>
+  {{- range . }}
+  <li>
+    <strong>{{ .year }}</strong> &nbsp;
+    {{ .authors }} &mdash;
+    {{- if .link }}
+    <a href="{{ .link }}" target="_blank" rel="noopener">{{ .title }}</a>
+    {{- else }}
+    {{ .title }}
+    {{- end }}
+    &nbsp;<em>({{ .venue }})</em>
+  </li>
+  {{- end }}
+</ul>
+{{- end }}
+
+{{- with $pub.conference_papers }}
+<h2>Conference Papers</h2>
+<ul>
+  {{- range . }}
+  <li>
+    <strong>{{ .year }}</strong> &nbsp;
+    {{ .authors }} &mdash;
+    {{- if .link }}
+    <a href="{{ .link }}" target="_blank" rel="noopener">{{ .title }}</a>
+    {{- else }}
+    {{ .title }}
+    {{- end }}
+    &nbsp;<em>({{ .venue }})</em>
+  </li>
+  {{- end }}
+</ul>
+{{- end }}
+
+{{- if $pub.patents }}
+<h2>Patents</h2>
+<ul>
+  {{- range $pub.patents }}
+  <li>{{ .year }} &mdash; {{ .title }}</li>
+  {{- end }}
+</ul>
+{{- else }}
+<h2>Patents</h2>
+<p><em>To be added.</em></p>
+{{- end }}
+
+{{- if $pub.technical_reports }}
+<h2>Technical Reports</h2>
+<ul>
+  {{- range $pub.technical_reports }}
+  <li>{{ .year }} &mdash; {{ .title }}</li>
+  {{- end }}
+</ul>
+{{- else }}
+<h2>Technical Reports</h2>
+<p><em>To be added.</em></p>
+{{- end }}
+
+</div>
+{{- end }}
