@@ -3,6 +3,21 @@ languageCode = "en-us"
 title = "DCNS Lab"
 theme = "PaperMod"
 enableGitInfo = true
+defaultContentLanguage = "en"
+
+# 啟用 JSON 輸出（PaperMod 搜尋功能所需）
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+# 雙語化設定（目前主語言為英文；中文內容逐步補充）
+[languages]
+  [languages.en]
+    languageName = "EN"
+    weight = 1
+  [languages.zh-tw]
+    languageName = "中文"
+    weight = 2
+    title = "DCNS 實驗室"
 
 [frontmatter]
   lastmod = [":git", "lastmod", "date", "publishDate"]
@@ -17,6 +32,11 @@ enableGitInfo = true
     name = "Publications"
     url = "publications/"
     weight = 20
+
+  [[menu.main]]
+    name = "Search"
+    url = "search/"
+    weight = 30
   
 [params]
   hideAuthor = true

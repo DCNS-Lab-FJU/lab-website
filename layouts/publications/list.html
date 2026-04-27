@@ -7,11 +7,31 @@
 
 <div class="post-content">
 
+{{/* ── 工具列：下載 + Year Filter ── */}}
+<div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;margin-bottom:1.2rem;">
+  <a href="{{ "publications.bib" | relURL }}" download
+     style="padding:.4rem .9rem;border:1px solid currentColor;border-radius:4px;font-size:.85rem;text-decoration:none;">
+    ⬇ Download .bib
+  </a>
+  <label style="font-size:.85rem;">
+    Filter by year:
+    <select id="yearFilter" onchange="filterPubs()" style="margin-left:.4rem;padding:.2rem .5rem;border-radius:4px;">
+      <option value="all">All</option>
+      {{- $years := slice }}
+      {{- range $pub.journal_articles }}{{- $years = $years | append (string .year) }}{{- end }}
+      {{- range $pub.conference_papers  }}{{- $years = $years | append (string .year) }}{{- end }}
+      {{- range (uniq $years | sort) | collections.Reverse }}
+      <option value="{{ . }}">{{ . }}</option>
+      {{- end }}
+    </select>
+  </label>
+</div>
+
 {{- with $pub.journal_articles }}
-<h2>Journal Articles</h2>
-<ul>
+<h2 id="h-journal">Journal Articles</h2>
+<ul id="list-journal">
   {{- range . }}
-  <li>
+  <li data-year="{{ .year }}">
     <strong>{{ .year }}</strong> &nbsp;
     {{ .authors }} &mdash;
     {{- if .link }}
@@ -26,10 +46,10 @@
 {{- end }}
 
 {{- with $pub.conference_papers }}
-<h2>Conference Papers</h2>
-<ul>
+<h2 id="h-conf">Conference Papers</h2>
+<ul id="list-conf">
   {{- range . }}
-  <li>
+  <li data-year="{{ .year }}">
     <strong>{{ .year }}</strong> &nbsp;
     {{ .authors }} &mdash;
     {{- if .link }}
@@ -44,10 +64,10 @@
 {{- end }}
 
 {{- if $pub.patents }}
-<h2>Patents</h2>
-<ul>
+<h2 id="h-patents">Patents</h2>
+<ul id="list-patents">
   {{- range $pub.patents }}
-  <li>{{ .year }} &mdash; {{ .title }}</li>
+  <li data-year="{{ .year }}">{{ .year }} &mdash; {{ .title }}</li>
   {{- end }}
 </ul>
 {{- else }}
@@ -56,10 +76,10 @@
 {{- end }}
 
 {{- if $pub.technical_reports }}
-<h2>Technical Reports</h2>
-<ul>
+<h2 id="h-reports">Technical Reports</h2>
+<ul id="list-reports">
   {{- range $pub.technical_reports }}
-  <li>{{ .year }} &mdash; {{ .title }}</li>
+  <li data-year="{{ .year }}">{{ .year }} &mdash; {{ .title }}</li>
   {{- end }}
 </ul>
 {{- else }}
@@ -68,4 +88,21 @@
 {{- end }}
 
 </div>
+
+<script>
+function filterPubs() {
+  var yr = document.getElementById('yearFilter').value;
+  document.querySelectorAll('li[data-year]').forEach(function(li) {
+    li.style.display = (yr === 'all' || li.dataset.year === yr) ? '' : 'none';
+  });
+  [['list-journal','h-journal'],['list-conf','h-conf'],['list-patents','h-patents'],['list-reports','h-reports']].forEach(function(pair) {
+    var ul = document.getElementById(pair[0]);
+    var h2 = document.getElementById(pair[1]);
+    if (!ul || !h2) return;
+    var anyVisible = Array.from(ul.querySelectorAll('li[data-year]')).some(function(li){ return li.style.display !== 'none'; });
+    ul.style.display = anyVisible ? '' : 'none';
+    h2.style.display  = anyVisible ? '' : 'none';
+  });
+}
+</script>
 {{- end }}

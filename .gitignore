@@ -3,3 +3,5 @@
 /.hugo_build.lock
 # Python virtual environments
 .venv/
+# Local script outputs (not deployed)
+/exports/
