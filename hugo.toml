@@ -20,6 +20,10 @@ enableGitInfo = true
   
 [params]
 
+  [params.author]
+    name = ""
+    email = ""
+
   [params.profileMode]
     enabled = true
     title = "DCNS Lab"
