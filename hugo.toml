@@ -19,6 +19,7 @@ enableGitInfo = true
     weight = 20
   
 [params]
+  hideAuthor = true
 
   [params.profileMode]
     enabled = true
