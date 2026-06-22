@@ -1,0 +1,136 @@
+{{- $isZh := eq .Lang "zh-tw" -}}
+{{- $defaultSite := site.Sites.Default -}}
+{{- $faculty := slice -}}
+{{- with site.GetPage "members/faculty" -}}
+  {{- $faculty = where .RegularPages "Params.draft" "ne" true -}}
+{{- end -}}
+{{- if and (eq (len $faculty) 0) ($defaultSite.GetPage "members/faculty") -}}
+  {{- $faculty = where ($defaultSite.GetPage "members/faculty").RegularPages "Params.draft" "ne" true -}}
+{{- end -}}
+
+{{- $students := slice -}}
+{{- with site.GetPage "members/students" -}}
+  {{- $students = where .RegularPages "Params.draft" "ne" true -}}
+{{- end -}}
+{{- if and (eq (len $students) 0) ($defaultSite.GetPage "members/students") -}}
+  {{- $students = where ($defaultSite.GetPage "members/students").RegularPages "Params.draft" "ne" true -}}
+{{- end -}}
+
+{{- $alumni := slice -}}
+{{- with site.GetPage "members/alumni" -}}
+  {{- $alumni = where .RegularPages "Params.draft" "ne" true -}}
+{{- end -}}
+{{- if and (eq (len $alumni) 0) ($defaultSite.GetPage "members/alumni") -}}
+  {{- $alumni = where ($defaultSite.GetPage "members/alumni").RegularPages "Params.draft" "ne" true -}}
+{{- end -}}
+
+{{- $journalArticles := site.Data.publications.journal_articles | default (slice) -}}
+{{- $conferencePapers := site.Data.publications.conference_papers | default (slice) -}}
+{{- $patents := site.Data.publications.patents | default (slice) -}}
+{{- $technicalReports := site.Data.publications.technical_reports | default (slice) -}}
+{{- $publicationTotal := add (add (len $journalArticles) (len $conferencePapers)) (add (len $patents) (len $technicalReports)) -}}
+
+<section class="lab-stats" aria-labelledby="lab-stats-title">
+  <style>
+    .lab-stats {
+      margin: 2.5rem 0 1rem;
+    }
+    .lab-stats__header {
+      margin-bottom: 1.1rem;
+      text-align: center;
+    }
+    .lab-stats__eyebrow {
+      margin: 0 0 .35rem;
+      color: var(--secondary);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+    .lab-stats__header h2 {
+      margin: 0;
+      font-size: 1.45rem;
+      line-height: 1.25;
+    }
+    .lab-stats__grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: .9rem;
+    }
+    .lab-stat {
+      display: block;
+      min-height: 118px;
+      padding: 1.05rem .9rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: inherit;
+      text-align: center;
+      text-decoration: none;
+      transition: border-color .15s, box-shadow .15s, transform .15s;
+    }
+    .lab-stat:hover {
+      border-color: var(--primary);
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+      transform: translateY(-2px);
+    }
+    .lab-stat__value {
+      display: block;
+      font-size: 2.15rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .lab-stat__label {
+      display: block;
+      margin-top: .55rem;
+      font-size: .92rem;
+      font-weight: 650;
+      line-height: 1.25;
+    }
+    .lab-stat__note {
+      display: block;
+      margin-top: .35rem;
+      color: var(--secondary);
+      font-size: .76rem;
+      line-height: 1.35;
+    }
+    @media (max-width: 760px) {
+      .lab-stats__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .lab-stat {
+        min-height: 108px;
+      }
+      .lab-stat__value {
+        font-size: 1.85rem;
+      }
+    }
+  </style>
+
+  <div class="lab-stats__header">
+    <p class="lab-stats__eyebrow">{{ cond $isZh "實驗室統計" "Lab Stats" }}</p>
+    <h2 id="lab-stats-title">{{ cond $isZh "DCNS 實驗室概覽" "DCNS Lab at a glance" }}</h2>
+  </div>
+
+  <div class="lab-stats__grid">
+    <a class="lab-stat" href="{{ "members/students/" | relLangURL }}">
+      <span class="lab-stat__value">{{ len $students }}</span>
+      <span class="lab-stat__label">{{ cond $isZh "現任學生" "Current Students" }}</span>
+      <span class="lab-stat__note">{{ cond $isZh "實驗室現任學生" "Active student members" }}</span>
+    </a>
+    <a class="lab-stat" href="{{ "publications/" | relLangURL }}">
+      <span class="lab-stat__value">{{ $publicationTotal }}</span>
+      <span class="lab-stat__label">{{ cond $isZh "論文發表" "Publications" }}</span>
+      <span class="lab-stat__note">{{ len $journalArticles }} {{ cond $isZh "篇期刊" "journal" }} · {{ len $conferencePapers }} {{ cond $isZh "篇會議" "conference" }}</span>
+    </a>
+    <a class="lab-stat" href="{{ "members/faculty/" | relLangURL }}">
+      <span class="lab-stat__value">{{ len $faculty }}</span>
+      <span class="lab-stat__label">{{ cond $isZh "教師" "Faculty" }}</span>
+      <span class="lab-stat__note">{{ cond $isZh "實驗室主持人" "Principal investigators" }}</span>
+    </a>
+    <a class="lab-stat" href="{{ "members/alumni/" | relLangURL }}">
+      <span class="lab-stat__value">{{ len $alumni }}</span>
+      <span class="lab-stat__label">{{ cond $isZh "校友" "Alumni" }}</span>
+      <span class="lab-stat__note">{{ cond $isZh "歷屆實驗室成員" "Former lab members" }}</span>
+    </a>
+  </div>
+</section>

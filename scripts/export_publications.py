@@ -18,7 +18,7 @@ OUT_DIR     = Path("exports")
 CSV_PATH    = OUT_DIR / "publications.csv"
 XLSX_PATH   = OUT_DIR / "publications.xlsx"
 
-FIELDNAMES = ["type", "year", "authors", "title", "venue", "link"]
+FIELDNAMES = ["type", "year", "authors", "title", "venue", "doi", "doi_status", "link"]
 
 
 def load_entries(data: dict) -> list[dict]:

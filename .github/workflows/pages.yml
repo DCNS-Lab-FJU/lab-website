@@ -30,6 +30,17 @@ jobs:
           hugo-version: "latest"
           extended: true
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install publication export dependencies
+        run: python -m pip install PyYAML
+
+      - name: Generate BibTeX
+        run: python scripts/generate_bib.py
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

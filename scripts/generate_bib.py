@@ -49,6 +49,8 @@ def entry_to_bib(entry: dict, bib_type: str) -> str:
         lines.append(f'  journal = {{{venue}}},')
     else:
         lines.append(f'  booktitle = {{{venue}}},')
+    if entry.get("doi"):
+        lines.append(f'  doi     = {{{entry["doi"]}}},')
     if entry.get("link"):
         lines.append(f'  url     = {{{entry["link"]}}},')
     lines.append("}")

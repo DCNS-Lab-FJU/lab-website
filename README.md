@@ -165,7 +165,8 @@ journal_articles:
     authors: "Student Name, Shu-Ping Lu"
     title: "Paper Title"
     venue: "Journal Name (Publisher)"
-    link: "https://doi.org/..."   # 無連結可省略此行
+    doi: "10.xxxx/xxxxx"          # 有 DOI 就填
+    link: "https://doi.org/10.xxxx/xxxxx"
 
 # 研討會論文
 conference_papers:
@@ -173,23 +174,23 @@ conference_papers:
     authors: "Student Name, Shu-Ping Lu"
     title: "Paper Title"
     venue: "ACM/IEEE Conference 2026"
-    link: "https://dl.acm.org/..."  # 無連結可省略此行
+    doi_status: "pending"         # DOI 還沒正式上線時使用
 ```
 
 > ⚠️ `authors` 欄位第一個名字就是第一作者，學生發表的論文把學生名字放第一。
 
-### 步驟二：重新產生 BibTeX 檔
+### 步驟二：本機預覽時可手動重新產生 BibTeX 檔
 
 ```bash
 python scripts/generate_bib.py
 ```
 
-這會更新 `static/publications.bib`（網站的 Download .bib 按鈕會下載這個檔案）。
+這會更新 `static/publications.bib`（網站的 Download .bib 按鈕會下載這個檔案）。正式部署時 GitHub Actions 會自動執行這一步，所以只改 `data/publications.yaml` 後 push 也可以。
 
 ### 步驟三：commit + push
 
 ```bash
-git add data/publications.yaml static/publications.bib
+git add data/publications.yaml
 git commit -m "feat(publications): add 論文標題"
 git push
 ```
@@ -198,7 +199,7 @@ git push
 
 | 情況 | 做法 |
 |---|---|
-| 論文還在審查中 | 先加入 YAML，`link` 欄位留空，接受後補上連結 |
+| 論文還在審查中 | 先加入 YAML，`doi_status: "pending"`，正式上線後補 `doi` 和 `link` |
 | 學生是第一作者 | `authors` 第一個填學生名字 |
 | 需要上傳論文全文 PDF | 用 GitHub Releases 上傳，把連結加到 `link` 欄位 |
 
