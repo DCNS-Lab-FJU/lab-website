@@ -1,7 +1,22 @@
 {{- define "main" }}
+{{- $isZh := eq .Lang "zh-tw" }}
+{{- $defaultSite := site.Sites.Default }}
 {{- $facultySection  := site.GetPage "members/faculty" }}
 {{- $studentSection  := site.GetPage "members/students" }}
 {{- $alumniSection   := site.GetPage "members/alumni" }}
+{{- $defaultFacultySection := $defaultSite.GetPage "members/faculty" }}
+{{- $defaultStudentSection := $defaultSite.GetPage "members/students" }}
+{{- $defaultAlumniSection := $defaultSite.GetPage "members/alumni" }}
+{{- $facultyPages := slice }}
+{{- with $facultySection }}{{- $facultyPages = where .RegularPages "Params.draft" "ne" true }}{{- end }}
+{{- if and (eq (len $facultyPages) 0) $defaultFacultySection }}{{- $facultyPages = where $defaultFacultySection.RegularPages "Params.draft" "ne" true }}{{- end }}
+{{- $studentPages := slice }}
+{{- with $studentSection }}{{- $studentPages = where .RegularPages "Params.draft" "ne" true }}{{- end }}
+{{- if and (eq (len $studentPages) 0) $defaultStudentSection }}{{- $studentPages = where $defaultStudentSection.RegularPages "Params.draft" "ne" true }}{{- end }}
+{{- $alumniPages := slice }}
+{{- with $alumniSection }}{{- $alumniPages = where .RegularPages "Params.draft" "ne" true }}{{- end }}
+{{- if and (eq (len $alumniPages) 0) $defaultAlumniSection }}{{- $alumniPages = where $defaultAlumniSection.RegularPages "Params.draft" "ne" true }}{{- end }}
+{{- $roleZh := dict "Principal Investigator" "主持人" "Graduate Student" "研究生" "In-service Master Student" "在職碩士生" "Research Assistant" "研究助理" "Current Project Student" "現任專題生" "Alumni Project Student" "歷屆專題生" }}
 
 <header class="page-header">
   <h1>{{ .Title }}</h1>
@@ -85,10 +100,10 @@
 </style>
 
 {{/* ── Faculty ── */}}
-{{- if $facultySection }}
-<h2>Faculty</h2>
+{{- if $facultyPages }}
+<h2>{{ cond $isZh "教師" "Faculty" }}</h2>
 <div class="faculty-grid">
-  {{- range $facultySection.RegularPages }}
+  {{- range $facultyPages }}
   <div class="faculty-card">
     <a href="{{ .RelPermalink }}">
       {{- $avatar := .Params.avatar }}
@@ -103,7 +118,7 @@
       {{- end }}
       {{- end }}
       <p class="member-name">{{ .Title }}</p>
-      {{- with .Params.role }}<p class="member-role">{{ . }}</p>{{- end }}
+      {{- with .Params.role }}<p class="member-role">{{ cond $isZh (index $roleZh . | default .) . }}</p>{{- end }}
     </a>
   </div>
   {{- end }}
@@ -111,12 +126,10 @@
 {{- end }}
 
 {{/* ── Current Students ── */}}
-{{- if $studentSection }}
-{{- $students := where $studentSection.RegularPages "Params.draft" "ne" true }}
-{{- if $students }}
-<h2>Students</h2>
+{{- if $studentPages }}
+<h2>{{ cond $isZh "學生" "Students" }}</h2>
 <div class="members-grid">
-  {{- range $students }}
+  {{- range $studentPages }}
   <div class="member-card">
     <a href="{{ .RelPermalink }}">
       {{- if .Params.avatar }}
@@ -125,25 +138,22 @@
       <div class="member-initials">{{ substr .Title 0 1 }}</div>
       {{- end }}
       <p class="member-name">{{ .Title }}</p>
-      {{- with .Params.role }}<p class="member-role">{{ . }}</p>{{- end }}
-      {{- with .Params.year }}<p class="member-year">Year {{ . }}</p>{{- end }}
+      {{- with .Params.role }}<p class="member-role">{{ cond $isZh (index $roleZh . | default .) . }}</p>{{- end }}
+      {{- with .Params.year }}<p class="member-year">{{ cond $isZh "入學年度" "Year" }} {{ . }}</p>{{- end }}
     </a>
     {{- with .Params.resources }}
-    <a class="member-resources" href="{{ . }}" target="_blank" rel="noopener">&#128196; Resources</a>
+    <a class="member-resources" href="{{ . }}" target="_blank" rel="noopener">&#128196; {{ cond $isZh "資料" "Resources" }}</a>
     {{- end }}
   </div>
   {{- end }}
 </div>
-{{- end }}
 {{- end }}
 
 {{/* ── Alumni ── */}}
-{{- if $alumniSection }}
-{{- $alumni := $alumniSection.RegularPages }}
-{{- if $alumni }}
-<h2>Alumni</h2>
+{{- if $alumniPages }}
+<h2>{{ cond $isZh "校友" "Alumni" }}</h2>
 <div class="members-grid">
-  {{- range $alumni }}
+  {{- range $alumniPages }}
   <div class="member-card">
     <a href="{{ .RelPermalink }}">
       {{- if .Params.avatar }}
@@ -152,16 +162,15 @@
       <div class="member-initials">{{ substr .Title 0 1 }}</div>
       {{- end }}
       <p class="member-name">{{ .Title }}</p>
-      {{- with .Params.role }}<p class="member-role">{{ . }}</p>{{- end }}
+      {{- with .Params.role }}<p class="member-role">{{ cond $isZh (index $roleZh . | default .) . }}</p>{{- end }}
       {{- with .Params.year }}<p class="member-year">{{ . }}</p>{{- end }}
     </a>
     {{- with .Params.resources }}
-    <a class="member-resources" href="{{ . }}" target="_blank" rel="noopener">&#128196; Resources</a>
+    <a class="member-resources" href="{{ . }}" target="_blank" rel="noopener">&#128196; {{ cond $isZh "資料" "Resources" }}</a>
     {{- end }}
   </div>
   {{- end }}
 </div>
-{{- end }}
 {{- end }}
 
 </div>

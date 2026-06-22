@@ -1,5 +1,6 @@
 {{- define "main" }}
 {{- $pub := site.Data.publications }}
+{{- $isZh := eq .Lang "zh-tw" }}
 
 <header class="page-header">
   <h1>{{ .Title }}</h1>
@@ -11,12 +12,12 @@
 <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;margin-bottom:1.2rem;">
   <a href="{{ "publications.bib" | relURL }}" download
      style="padding:.4rem .9rem;border:1px solid currentColor;border-radius:4px;font-size:.85rem;text-decoration:none;">
-    ⬇ Download .bib
+    ⬇ {{ cond $isZh "下載 .bib" "Download .bib" }}
   </a>
   <label style="font-size:.85rem;">
-    Filter by year:
+    {{ cond $isZh "依年份篩選：" "Filter by year:" }}
     <select id="yearFilter" onchange="filterPubs()" style="margin-left:.4rem;padding:.2rem .5rem;border-radius:4px;">
-      <option value="all">All</option>
+      <option value="all">{{ cond $isZh "全部" "All" }}</option>
       {{- $years := slice }}
       {{- range $pub.journal_articles }}{{- $years = $years | append (string .year) }}{{- end }}
       {{- range $pub.conference_papers  }}{{- $years = $years | append (string .year) }}{{- end }}
@@ -28,63 +29,81 @@
 </div>
 
 {{- with $pub.journal_articles }}
-<h2 id="h-journal">Journal Articles</h2>
+<h2 id="h-journal">{{ cond $isZh "期刊論文" "Journal Articles" }}</h2>
 <ul id="list-journal">
   {{- range . }}
   <li data-year="{{ .year }}">
     <strong>{{ .year }}</strong> &nbsp;
     {{ .authors }} &mdash;
-    {{- if .link }}
-    <a href="{{ .link }}" target="_blank" rel="noopener">{{ .title }}</a>
+    {{- $link := .link }}
+    {{- if and (not $link) .doi }}{{- $link = printf "https://doi.org/%s" .doi }}{{- end }}
+    {{- if $link }}
+    <a href="{{ $link }}" target="_blank" rel="noopener">{{ .title }}</a>
     {{- else }}
     {{ .title }}
     {{- end }}
     &nbsp;<em>({{ .venue }})</em>
+    {{- if .doi }}
+    &nbsp;<a href="https://doi.org/{{ .doi }}" target="_blank" rel="noopener" style="font-size:.78rem;">DOI: {{ .doi }}</a>
+    {{- else }}
+    {{- if eq .doi_status "pending" }}
+    &nbsp;<span style="font-size:.78rem;color:var(--secondary);">{{ cond $isZh "DOI 待補" "DOI pending" }}</span>
+    {{- end }}
+    {{- end }}
   </li>
   {{- end }}
 </ul>
 {{- end }}
 
 {{- with $pub.conference_papers }}
-<h2 id="h-conf">Conference Papers</h2>
+<h2 id="h-conf">{{ cond $isZh "會議論文" "Conference Papers" }}</h2>
 <ul id="list-conf">
   {{- range . }}
   <li data-year="{{ .year }}">
     <strong>{{ .year }}</strong> &nbsp;
     {{ .authors }} &mdash;
-    {{- if .link }}
-    <a href="{{ .link }}" target="_blank" rel="noopener">{{ .title }}</a>
+    {{- $link := .link }}
+    {{- if and (not $link) .doi }}{{- $link = printf "https://doi.org/%s" .doi }}{{- end }}
+    {{- if $link }}
+    <a href="{{ $link }}" target="_blank" rel="noopener">{{ .title }}</a>
     {{- else }}
     {{ .title }}
     {{- end }}
     &nbsp;<em>({{ .venue }})</em>
+    {{- if .doi }}
+    &nbsp;<a href="https://doi.org/{{ .doi }}" target="_blank" rel="noopener" style="font-size:.78rem;">DOI: {{ .doi }}</a>
+    {{- else }}
+    {{- if eq .doi_status "pending" }}
+    &nbsp;<span style="font-size:.78rem;color:var(--secondary);">{{ cond $isZh "DOI 待補" "DOI pending" }}</span>
+    {{- end }}
+    {{- end }}
   </li>
   {{- end }}
 </ul>
 {{- end }}
 
 {{- if $pub.patents }}
-<h2 id="h-patents">Patents</h2>
+<h2 id="h-patents">{{ cond $isZh "專利" "Patents" }}</h2>
 <ul id="list-patents">
   {{- range $pub.patents }}
   <li data-year="{{ .year }}">{{ .year }} &mdash; {{ .title }}</li>
-  {{- end }}
+{{- end }}
 </ul>
 {{- else }}
-<h2>Patents</h2>
-<p><em>To be added.</em></p>
+<h2>{{ cond $isZh "專利" "Patents" }}</h2>
+<p><em>{{ cond $isZh "待補。" "To be added." }}</em></p>
 {{- end }}
 
 {{- if $pub.technical_reports }}
-<h2 id="h-reports">Technical Reports</h2>
+<h2 id="h-reports">{{ cond $isZh "技術報告" "Technical Reports" }}</h2>
 <ul id="list-reports">
   {{- range $pub.technical_reports }}
   <li data-year="{{ .year }}">{{ .year }} &mdash; {{ .title }}</li>
-  {{- end }}
+{{- end }}
 </ul>
 {{- else }}
-<h2>Technical Reports</h2>
-<p><em>To be added.</em></p>
+<h2>{{ cond $isZh "技術報告" "Technical Reports" }}</h2>
+<p><em>{{ cond $isZh "待補。" "To be added." }}</em></p>
 {{- end }}
 
 </div>

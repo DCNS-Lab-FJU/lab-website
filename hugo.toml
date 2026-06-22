@@ -1,5 +1,4 @@
 baseURL = "https://dcns-lab-fju.github.io/lab-website/"
-languageCode = "en-us"
 title = "DCNS Lab"
 theme = "PaperMod"
 enableGitInfo = true
@@ -9,54 +8,106 @@ defaultContentLanguage = "en"
 [outputs]
   home = ["HTML", "RSS", "JSON"]
 
-# 雙語化設定（中文內容就緒後再取消註解）
-# [languages]
-#   [languages.en]
-#     languageName = "EN"
-#     weight = 1
-#   [languages.zh-tw]
-#     languageName = "中文"
-#     weight = 2
-#     title = "DCNS 實驗室"
-
 [frontmatter]
   lastmod = [":git", "lastmod", "date", "publishDate"]
 
-[menu]
-  [[menu.main]]
+[languages]
+  [languages.en]
+    languageCode = "en-us"
+    languageName = "EN"
+    weight = 1
+    title = "DCNS Lab"
+
+  [[languages.en.menu.main]]
     name = "Members"
     url = "members/"
     weight = 10
 
-  [[menu.main]]
+  [[languages.en.menu.main]]
     name = "Publications"
     url = "publications/"
     weight = 20
 
-  [[menu.main]]
+  [[languages.en.menu.main]]
+    name = "Lab Stats"
+    url = "stats/"
+    weight = 25
+
+  [[languages.en.menu.main]]
     name = "Search"
     url = "search/"
     weight = 30
-  
-[params]
-  hideAuthor = true
 
-  [params.profileMode]
+  [languages.en.params]
+    hideAuthor = true
+    languageAltTitle = "English"
+
+  [languages.en.params.profileMode]
     enabled = true
     title = "DCNS Lab"
     subtitle = "Welcome to DCNS Lab."
-    
     imageUrl = "images/members/lu-shu-ping.jpg"
     imageTitle = "Lu Shu Ping"
     imageWidth = 220
     imageHeight = 220
-    [[params.profileMode.buttons]]
+
+    [[languages.en.params.profileMode.buttons]]
       name = "Members"
       url = "members/"
 
-    [[params.profileMode.buttons]]
+    [[languages.en.params.profileMode.buttons]]
       name = "Publications"
       url = "publications/"
-    [params.footer]
-      text = "Created by Ting-Yu Chien (2026) · Maintained by Ting-Yu Chien"
 
+  [languages.en.params.footer]
+    text = "Created by Ting-Yu Chien (2026) · Maintained by Ting-Yu Chien"
+
+  [languages.zh-tw]
+    languageCode = "zh-tw"
+    languageName = "中文"
+    weight = 2
+    title = "DCNS 實驗室"
+
+  [[languages.zh-tw.menu.main]]
+    name = "成員"
+    url = "members/"
+    weight = 10
+
+  [[languages.zh-tw.menu.main]]
+    name = "論文發表"
+    url = "publications/"
+    weight = 20
+
+  [[languages.zh-tw.menu.main]]
+    name = "實驗室統計"
+    url = "stats/"
+    weight = 25
+
+  [[languages.zh-tw.menu.main]]
+    name = "搜尋"
+    url = "search/"
+    weight = 30
+
+  [languages.zh-tw.params]
+    hideAuthor = true
+    languageAltTitle = "繁體中文"
+
+  [languages.zh-tw.params.profileMode]
+    enabled = true
+    title = "DCNS 實驗室"
+    subtitle = "歡迎來到 DCNS 實驗室。"
+    imageUrl = "images/members/lu-shu-ping.jpg"
+    imageTitle = "盧淑萍"
+    imageWidth = 220
+    imageHeight = 220
+
+    [[languages.zh-tw.params.profileMode.buttons]]
+      name = "成員"
+      url = "members/"
+
+    [[languages.zh-tw.params.profileMode.buttons]]
+      name = "論文發表"
+      url = "publications/"
+
+  [languages.zh-tw.params.footer]
+    text = "Created by Ting-Yu Chien (2026) · Maintained by Ting-Yu Chien"
